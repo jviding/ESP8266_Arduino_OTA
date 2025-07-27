@@ -5,9 +5,18 @@ LogLevel Logger::_log_level = LOG_LEVEL_DEBUG;
 void Logger::start(LogLevel level) {
     Serial.begin(115200);
     while (!Serial) { ; } // Wait for Serial to be ready
-    Serial.println("Serial started");
+    Serial.println("Serial started.");
+
+    if (level < LOG_LEVEL_DEBUG || level > LOG_LEVEL_ERROR) {
+        Serial.println("Invalid log level provided, defaulting to DEBUG.");
+        level = LOG_LEVEL_DEBUG;
+    }
+
     _log_level = level;
-    Serial.println("Logger started");
+    static const char* log_levels_str_arr[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+    Serial.println("Logger started.");
+    Serial.print("Log level set to: ");
+    Serial.println(log_levels_str_arr[_log_level]);
 }
 
 void Logger::debug(const char* tag, const char* message, ...) {
