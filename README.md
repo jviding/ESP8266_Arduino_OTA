@@ -18,11 +18,11 @@ List supported boards:
 
 # Build
 For ESP8266-12F, use esp8266:esp8266:generic.
-\$ arduino-cli compile --fqbn esp8266:esp8266:generic --build-path ./build main
+\$ arduino-cli compile --fqbn esp8266:esp8266:generic --build-path ./build .
 
 Builds to:
 ./build/main.ino.bin
 
 # Flash
 Using esptool:
-\$ esptool.py --port /dev/ttyUSB0 --baud 115200 write_flash 0x00000 ./main.ino.bin
+\$ esptool.py --port /dev/ttyUSB0 --baud 115200 write_flash 0x00000 ./ESP8266_Arduino_OTA.ino.bin
