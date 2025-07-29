@@ -1,4 +1,5 @@
 #include "wifi.h"
+#include "../logger/logger.h"
 
 namespace {
     const char* TAG = "WiFi";
