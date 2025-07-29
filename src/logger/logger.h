@@ -1,6 +1,5 @@
 #pragma once
 #include <Arduino.h>
-#include <stdarg.h>
 
 
 enum LogLevel {
