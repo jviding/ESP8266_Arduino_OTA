@@ -1,6 +1,9 @@
 #include "logger.h"
 
-static const char* TAG = "Logger";
+namespace {
+    const char* TAG = "Logger";
+}
+
 LogLevel Logger::_log_level = LOG_LEVEL_DEBUG;
 
 
