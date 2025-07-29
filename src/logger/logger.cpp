@@ -1,22 +1,31 @@
 #include "logger.h"
 
+static const char* TAG = "Logger";
 LogLevel Logger::_log_level = LOG_LEVEL_DEBUG;
 
+
 void Logger::start(LogLevel level) {
+    start_serial();
+    set_log_level(level);
+    info(TAG, "Logger started.");
+}
+
+void Logger::start_serial() {
     Serial.begin(115200);
     while (!Serial) { ; } // Wait for Serial to be ready
-    Serial.println("Serial started.");
+    Serial.println("[!][Logger] Serial started.");
+}
 
+void Logger::set_log_level(LogLevel level) {  
     if (level < LOG_LEVEL_DEBUG || level > LOG_LEVEL_ERROR) {
-        Serial.println("Invalid log level provided, defaulting to DEBUG.");
-        level = LOG_LEVEL_DEBUG;
+        _log_level = LOG_LEVEL_DEBUG;
+        warning(TAG, "Invalid log level provided.");
+        warning(TAG, "Defaulting to log level DEBUG.");
+    } else {
+        _log_level = level;
+        static const char* log_levels_str_arr[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+        info(TAG, "Log level set to: %s", log_levels_str_arr[_log_level]);
     }
-
-    _log_level = level;
-    static const char* log_levels_str_arr[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
-    Serial.println("Logger started.");
-    Serial.print("Log level set to: ");
-    Serial.println(log_levels_str_arr[_log_level]);
 }
 
 void Logger::debug(const char* tag, const char* message, ...) {
