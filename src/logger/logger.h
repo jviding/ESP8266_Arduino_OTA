@@ -19,6 +19,8 @@ public:
     static void warning(const char* tag, const char* message, ...);
     static void error(const char* tag, const char* message, ...);
 
+    static void flush();
+
 private:
     static LogLevel _log_level;
     static void start_serial();

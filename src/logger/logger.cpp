@@ -67,6 +67,10 @@ void Logger::error(const char* tag, const char* message, ...) {
     }
 }
 
+void Logger::flush() {
+    Serial.flush();
+}
+
 void Logger::write(const char* level_tag, const char* tag, const char* message, va_list args) {
     // Format string with variadic arguments
     char temp[128];
