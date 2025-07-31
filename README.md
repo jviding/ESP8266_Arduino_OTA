@@ -4,7 +4,7 @@ OTA updates for ESP8266 projects, using the Arduino framework.
 
 # Build tools
 Install arduino-cli, but not with snap.
-Snap sandbox doesn't allow access to system Python.
+Snap sandbox doesn't allow accessing system Python.
 
 Install the ESP8266 core:
 \$ arduino-cli config add board_manager.additional_urls \
@@ -14,7 +14,6 @@ Install the ESP8266 core:
 
 List supported boards:
 \$ arduino-cli board listall
-
 
 # Build
 For ESP8266-12F, use esp8266:esp8266:generic.
@@ -26,3 +25,10 @@ Builds to:
 # Flash
 Using esptool:
 \$ esptool.py --port /dev/ttyUSB0 --baud 115200 write_flash 0x00000 ./ESP8266_Arduino_OTA.ino.bin
+
+# Monitor
+Read serial:
+\$ minicom -D /dev/ttyUSB0 -o -b 115200
+
+# Serve OTA updates
+See the 'server.php' file for reference.
