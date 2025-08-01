@@ -1,45 +1,42 @@
 #include "wifi.h"
 #include "../logger/logger.h"
+#include "wifi_AP/wifi_ap.h"
+#include "wifi_STA/wifi_sta.h"
 
 namespace {
     const char* TAG = "WiFi";
 }
 
 
+// WIFI AP
+
 IPAddress MyWiFi::get_AP_IP() {
-    return WiFi.softAPIP();
+    return MyWiFi_AP::get_IP();
 }
+
+void MyWiFi::AP_start(const char* AP_SSID, const char* AP_PASSWORD) {
+    MyWiFi_AP::start(AP_SSID, AP_PASSWORD);
+}
+
+void MyWiFi::AP_stop() {
+    MyWiFi_AP::stop();
+}
+
+
+// WIFI STA
 
 IPAddress MyWiFi::get_STA_IP() {
-    return WiFi.localIP();
+    return MyWiFi_STA::get_IP();
 }
 
-void MyWiFi::start_AP(const char* AP_SSID, const char* AP_PASSWORD) {
-    WiFi.mode(WIFI_AP);
-    WiFi.softAP(AP_SSID, AP_PASSWORD);
-    Logger::info(TAG, "Access Point started.");
-    Logger::info(TAG, "SSID: %s", AP_SSID);
-    Logger::info(TAG, "Password: %s", AP_PASSWORD);
+bool MyWiFi::is_STA_connected() {
+    return MyWiFi_STA::is_connected();
 }
 
-void MyWiFi::stop_AP() {
-    WiFi.softAPdisconnect(true);
-    Logger::info(TAG, "Access Point stopped.");
+bool MyWiFi::STA_connect(const char* STA_SSID, const char* STA_PASSWORD) {
+    return MyWiFi_STA::connect(STA_SSID, STA_PASSWORD);
 }
 
-void MyWiFi::start_STA(const char* STA_SSID, const char* STA_PASSWORD) {
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(STA_SSID, STA_PASSWORD);
-    Logger::info(TAG, "Connecting to WiFi as Station.");
-    int seconds = 0;
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(1000);
-        Logger::info(TAG, "Attempting connection... (%d seconds)", ++seconds);
-    }
-    Logger::info(TAG, "Connected.");
-}
-
-void MyWiFi::stop_STA() {
-    WiFi.disconnect();
-    Serial.println("Disconnected from WiFi as Station");
+void MyWiFi::STA_disconnect() {
+    MyWiFi_STA::disconnect();
 }
