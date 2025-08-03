@@ -15,7 +15,7 @@ bool MyWiFi_STA::is_connected() {
 }
 
 bool MyWiFi_STA::connect(const char* STA_SSID, const char* STA_PASSWORD) {
-    if (!is_connected()) {
+    if (!is_connected() || !WiFi.SSID().equals(STA_SSID)) {
         WiFi.mode(WIFI_STA);
         WiFi.disconnect();      // Soft reset WiFi to ensure clean state
         delay(250);
