@@ -8,5 +8,5 @@
 
 class OTAUpdate {
 public:
-    static bool try_update(const char* url);
+    static bool try_update(const char* ota_url);
 };
